@@ -29,11 +29,23 @@ boot.bas: src/boot.bas loader.bin
 loader.bin: src/loader.asm
 	pasmo --bin src/loader.asm loader.bin
 
+data.bin: src/depacker.asm buffer.zx7 LERN.zx7 Prog.zx7
+	true
+
+buffer.zx7: buffer.cod
+	zx7 buffer.cod buffer.zx7
+
 buffer.cod: buffer.000
 	0tobin buffer.000
 
+LERN.zx7: LERN.cod
+	zx7 LERN.cod LERN.zx7
+
 LERN.cod: LERN.000
 	0tobin LERN.000
+
+Prog.zx7: Prog.bas
+	zx7 Prog.bas Prog.zx7
 
 Prog.bas: Prog.000
 	0tobin Prog.000
@@ -57,4 +69,5 @@ clean:
 		*.cod \
 		*.tap \
 		*.trd \
-		*.tzx
+		*.tzx \
+		*.zx7
