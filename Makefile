@@ -1,3 +1,6 @@
+River-Raid.scl: River-Raid.trd
+	trd2scl River-Raid.trd River-Raid.scl
+
 # The compressed screen is created by Laser Compact v5.2
 # and cannot be generated at the build time
 # see https://spectrumcomputing.co.uk/?cat=96&id=21446
