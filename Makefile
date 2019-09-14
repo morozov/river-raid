@@ -1,7 +1,7 @@
 # The compressed screen is created by Laser Compact v5.2
 # and cannot be generated at the build time
 # see https://spectrumcomputing.co.uk/?cat=96&id=21446
-River-Raid.trd: boot.$$B hob/screenz.$$C
+River-Raid.trd: boot.$$B hob/screenz.$$C data.$$C
 # Create a temporary file first in order to make sure the target file
 # gets created only after the entire job has succeeded
 	$(eval TMPFILE=$(shell tempfile))
@@ -9,6 +9,7 @@ River-Raid.trd: boot.$$B hob/screenz.$$C
 	createtrd $(TMPFILE)
 	hobeta2trd boot.\$$B $(TMPFILE)
 	hobeta2trd hob/screenz.\$$C $(TMPFILE)
+	hobeta2trd data.\$$C $(TMPFILE)
 
 # Rename the temporary file to target name
 	mv $(TMPFILE) River-Raid.trd
@@ -29,8 +30,15 @@ boot.bas: src/boot.bas loader.bin
 loader.bin: src/loader.asm
 	pasmo --bin src/loader.asm loader.bin
 
+data.$$C: data.000
+	0tohob data.000
+
+data.000: data.bin
+	rm -f data.000
+	binto0 data.bin 3
+
 data.bin: src/depacker.asm buffer.zx7 LERN.zx7 Prog.zx7
-	true
+	pasmo --bin src/depacker.asm data.bin
 
 buffer.zx7: buffer.cod
 	zx7 buffer.cod buffer.zx7
@@ -64,6 +72,7 @@ clean:
 	rm -f \
 		*.000 \
 		*.\$$B \
+		*.\$$C \
 		*.bas \
 		*.bin \
 		*.cod \

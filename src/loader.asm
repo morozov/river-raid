@@ -12,3 +12,10 @@ LD BC, #0705     ; load 7 sectors of compressed image
 LD HL, #9C40     ; destination address (40000)
 CALL #3D13       ;
 CALL #9C40       ; decompress the image
+
+; Load the data
+LD DE, (#5CF4)   ; restore the FDD head position
+LD BC, #4205     ; load 66 sectors of data
+LD HL, #BB00     ; destination address (47872)
+CALL #3D13
+JP #BB00
