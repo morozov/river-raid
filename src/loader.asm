@@ -1,10 +1,15 @@
+CLS       equ #0D6B ; https://skoolkid.github.io/rom/asm/0D6B.html
+BORDCR    equ #5C48 ; https://skoolkid.github.io/rom/asm/5C48.html
+ATTR_P    equ #5C8D ; https://skoolkid.github.io/rom/asm/5C8D.html
+
 ; Clear the screen
-XOR A            ; BORDER 0
-OUT ($FE), A     ;
-LD HL, #4000     ; from 16385
-LD DE, #4001     ; to   16385
-LD BC, #1AFF     ; repeat 6911 times
-LDIR             ; copy
+; It's not enough to just fill the video memory with zeroes
+; Since the game doesn't initialize BORDER and PAPER properly
+XOR A
+LD (ATTR_P), A
+LD (BORDCR), A
+OUT (#FE), A
+CALL CLS
 
 ; Load the image
 LD DE, (#5CF4)   ; restore the FDD head position
