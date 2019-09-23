@@ -1,7 +1,7 @@
 pr_string   EQU #203C ; https://skoolkid.github.io/rom/asm/1FFC.html#203C
 chan_open   EQU #1601 ; https://skoolkid.github.io/rom/asm/1601.html
 dstbuffer   EQU #5B00
-dstsys      EQU #5C4F
+dstsys      EQU #5C4F ; https://skoolkid.github.io/rom/asm/5C4F.html
 dstprog     EQU #5CCB
 dstlern     EQU #7800
 
@@ -25,9 +25,16 @@ at00:
     DEFB    #16,#00,#00 ; AT 0,0
 
 sysvars:
-    DEFB    #B6,#5C,#B6,#5C,#CB,#5C,#CB,#5C
-    DEFB    #00,#80,#EA,#5C,#00,#00,#EC,#5C
-    DEFB    #FD,#5C,#FD,#5C
+    DEFB    #B6,#5C ; CHANS
+    DEFB    #B6,#5C ; CURCHL
+    DEFB    #CB,#5C ; PROG
+    DEFB    #CB,#5C ; NXTLIN
+    DEFB    #00,#80 ; DATADD
+    DEFB    #EA,#5C ; E-LINE
+    DEFB    #00,#00 ; K-CUR
+    DEFB    #EC,#5C ; CH-ADD
+    DEFB    #FD,#5C ; X-PTR
+    DEFB    #FD,#5C ; WORKSP
 
 start:
     LD      HL, srcbuffer
