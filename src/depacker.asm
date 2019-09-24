@@ -25,9 +25,6 @@ srclern:
 at00:
     DEFB    #16,#00,#00 ; AT 0,0
 
-sysvars:
-    DEFW    chinfo
-
 start:
     LD      HL, srcbuffer
     LD      DE, dstbuffer
@@ -41,17 +38,18 @@ start:
     LD      DE, dstlern
     CALL    dzx7_standard
 
-; Restore system variables
-    LD      HL, sysvars
-    LD      DE, chans
-    LD      BC, start-sysvars
-    LDIR
+; Set CHANS back to its 48K value
+    LD      HL, chans
+    LD      BC, chinfo
+    LD      (HL), C
+    INC     HL
+    LD      (HL), B
 
 ; PRINT AT 0,0
     LD      A, #02
     CALL    chan_open
     LD      DE,at00
-    LD      BC,sysvars-at00
+    LD      BC,start-at00
     CALL    pr_string
 
 ; RANDOMIZE USR 23762
