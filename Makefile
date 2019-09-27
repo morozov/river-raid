@@ -40,8 +40,11 @@ data.000: data.bin
 	rm -f data.000
 	binto0 data.bin 3
 
-data.bin: src/depacker.asm buffer.zx7 LERN.zx7 Prog.zx7
+data.bin: src/depacker.asm buffer.zx7 LERN.zx7 Prog.patched.zx7
 	pasmo --bin src/depacker.asm data.bin
+
+controls.bin: src/controls.asm
+	pasmo --bin src/controls.asm controls.bin
 
 buffer.zx7: buffer.cod
 	zx7 buffer.cod buffer.zx7
@@ -55,8 +58,14 @@ LERN.zx7: LERN.cod
 LERN.cod: LERN.000
 	0tobin LERN.000
 
-Prog.zx7: Prog.bas
-	zx7 Prog.bas Prog.zx7
+Prog.patched.bas: Prog.bas controls.bin
+	cp Prog.bas Prog.patched.bas
+# The output offset is the relative offset of the start memory address being patched to the start address of the file:
+# 0x607A (see src/controls.asm) - 0x5CCB (where PROG points) = 0x3AF (or 943 decimal)
+	dd if=controls.bin of=Prog.patched.bas obs=1 seek=943 conv=notrunc
+
+Prog.patched.zx7: Prog.patched.bas
+	zx7 Prog.patched.bas Prog.patched.zx7
 
 Prog.bas: Prog.000
 	0tobin Prog.000
