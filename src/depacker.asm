@@ -18,7 +18,7 @@ srcprog:
     incbin  Prog.patched.zx7
 
 srclern:
-    incbin  LERN.zx7
+    incbin  LERN.patched.zx7
 
     include lib/dzx7_standard.asm
 

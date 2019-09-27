@@ -40,7 +40,7 @@ data.000: data.bin
 	rm -f data.000
 	binto0 data.bin 3
 
-data.bin: src/depacker.asm buffer.zx7 LERN.zx7 Prog.patched.zx7
+data.bin: src/depacker.asm buffer.zx7 LERN.patched.zx7 Prog.patched.zx7
 	pasmo --bin src/depacker.asm data.bin
 
 controls.bin: src/controls.asm
@@ -52,8 +52,11 @@ buffer.zx7: buffer.cod
 buffer.cod: buffer.000
 	0tobin buffer.000
 
-LERN.zx7: LERN.cod
-	zx7 LERN.cod LERN.zx7
+LERN.patched.zx7: LERN.patched.cod
+	zx7 LERN.patched.cod LERN.patched.zx7
+
+LERN.patched.cod: LERN.cod
+	sed "s/FASTER......2/FASTER......Q/; s/SLOWER......W/SLOWER......A/g" LERN.cod > LERN.patched.cod
 
 LERN.cod: LERN.000
 	0tobin LERN.000

@@ -19,11 +19,12 @@ Despite the fact that there are many existing [disk versions](https://vtrd.in/ga
 1. The tape loader has been replaced with the one for TR-DOS.
 2. The loading screen has been optimized and compressed to 22% of its original size.
 3. The entire SCL image is 19KB compared to the original 47KB tzx.
-4. The resulting image is a monoblock (one *.B file contains all the data).
+4. The "FASTER" and "SLOWER" keys are remapped from `2` and `W` to `Q` and `A` respectively.
+5. The resulting image is a monoblock (one *.B file contains all the data).
 
 ## Inspirations
 
-1. [Disk version by ZDW'97](https://vtrd.in/gamez/r/RIVER_R_.ZIP). It helped me understand that the existing disk versions are smaller than the original due to used data compression, not because some data is unnecessary.
+1. [Disk version by ZDW'97](https://vtrd.in/gamez/r/RIVER_R_.ZIP). It helped me understand that the existing disk versions are smaller than the original due to used data compression, not because some data is unnecessary. Also, showed the idea of remapping keyboard controls.
 2. [Disk version by Be-Be Software'85](https://vtrd.in/gamez/r/RRAID_BE.zip). The idea that some of the system variables need to be set it their 48K values to let the game start.
 
 ## Usage
