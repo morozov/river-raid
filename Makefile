@@ -14,6 +14,15 @@ River-Raid.trd: boot.$$B hob/screenz.$$C data.$$C
 	hobeta2trd hob/screenz.\$$C $(TMPFILE)
 	hobeta2trd data.\$$C $(TMPFILE)
 
+# Write the correct length to the first file (offset 13)
+# The length is 1 (boot) + 7 (loading screen) + 66 (data) = 74
+# Got to use the the octal notation since it's the only format of binary data POSIX printf understands
+# https://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html#tag_20_94_13
+	printf '\112' | dd of=$(TMPFILE) bs=1 seek=13 conv=notrunc status=none
+
+# Remove two other files (fill 2×16 bytes starting offset 16 with zeroes)
+	dd if=/dev/zero of=$(TMPFILE) bs=1 seek=16 count=32 conv=notrunc status=none
+
 # Rename the temporary file to target name
 	mv $(TMPFILE) River-Raid.trd
 
