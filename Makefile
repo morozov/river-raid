@@ -7,7 +7,7 @@ River-Raid.scl: River-Raid.trd
 River-Raid.trd: boot.$$B hob/screenz.$$C data.$$C
 # Create a temporary file first in order to make sure the target file
 # gets created only after the entire job has succeeded
-	$(eval TMPFILE=$(shell tempfile))
+	$(eval TMPFILE=$(shell mktemp))
 
 	createtrd $(TMPFILE)
 	hobeta2trd boot.\$$B $(TMPFILE)
